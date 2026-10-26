@@ -1,0 +1,9 @@
+# context-relay: omp settings. install.sh fills thresholdPercent from RELAY_COMPACT_AT_PERCENT.
+compaction:
+  enabled: true
+  # Roll over while the context is still sharp, not at the cliff.
+  thresholdPercent: 60
+  # Readable handoff first, so the extension can mirror it to .relay/HANDOFF.md.
+  # handoff is skipped on hard overflow; the remaining methods cover that case.
+  methodOrder: ["handoff", "remote", "snapcompact", "shake", "soft"]
+  autoContinue: true

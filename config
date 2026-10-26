@@ -1,0 +1,19 @@
+# context-relay configuration. KEY=VALUE, read by the scripts, the omp/pi extension and install.sh.
+
+# --- Rollover: when the harness compacts (install.sh writes these into the harness config) ---
+RELAY_COMPACT_AT_PERCENT=60      # omp, pi: % of the model's context window
+RELAY_COMPACT_AT_TOKENS=120000   # Claude Code (auto-compact window), Codex (auto-compact token limit)
+
+# --- End of life: stop compacting a session and restart fresh from HANDOFF.md ---
+RELAY_EOL_COMPACTIONS=3          # after N compactions in one session; 0 = never
+RELAY_EOL_HOURS=8                # after N hours of session age; 0 = never
+RELAY_EOL_ACTION=restart         # restart | notify | exit | off
+#   restart  omp/pi: checkpoint, tell the agent to wrap up, pre-fill `/relay restart` (one Enter).
+#            Claude Code / Codex: tell the agent to wrap up and the user to /clear (or /new).
+#   notify   only tell the agent and the user.
+#   exit     omp/pi: checkpoint, then quit; pair with bin/relay-loop.sh to relaunch fresh.
+#   off      no end of life.
+
+# --- Rehydrate ---
+RELAY_MAX_BYTES=16000            # cap on injected state
+RELAY_ARCHIVE_KEEP=10            # previous handoffs kept in .relay/archive/

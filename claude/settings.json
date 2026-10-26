@@ -1,0 +1,19 @@
+{
+  "env": {
+    "CLAUDE_CODE_AUTO_COMPACT_WINDOW": "120000"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.relay/bin/relay-hook.sh\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

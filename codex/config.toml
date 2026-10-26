@@ -1,0 +1,16 @@
+# context-relay: Codex settings. Merge into ~/.codex/config.toml (or the project's .codex/config.toml).
+# install.sh prints this with RELAY_COMPACT_AT_TOKENS from .relay/config filled in.
+
+# Roll over early.
+model_auto_compact_token_limit = 120000
+
+[features]
+hooks = true   # legacy key: codex_hooks
+
+[[hooks.SessionStart]]
+matcher = "startup|clear|compact"
+
+[[hooks.SessionStart.hooks]]
+type = "command"
+command = "bash \"$(git rev-parse --show-toplevel 2>/dev/null || pwd)/.relay/bin/relay-hook.sh\""
+timeout = 10
